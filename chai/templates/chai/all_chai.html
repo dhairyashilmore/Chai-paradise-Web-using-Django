@@ -1,0 +1,535 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Chai Varieties - Chai Paradise</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #110536 0%, #1a0a4d 50%, #0d0320 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Animated background elements */
+        body::before {
+            content: '☕';
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            font-size: 10em;
+            color: rgba(243, 156, 18, 0.05);
+            top: -100px;
+            left: -100px;
+            z-index: 0;
+            animation: float 12s ease-in-out infinite;
+            opacity: 0.6;
+        }
+        
+        body::after {
+            content: '🍃';
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            font-size: 8em;
+            color: rgba(212, 82, 42, 0.05);
+            bottom: 50px;
+            right: -50px;
+            z-index: 0;
+            animation: float 14s ease-in-out infinite reverse;
+            opacity: 0.5;
+        }
+        
+        /* Steam animation background */
+        .steam-1 {
+            position: fixed;
+            width: 100px;
+            height: 150px;
+            left: 10%;
+            top: 20%;
+            z-index: 0;
+            animation: steam 4s ease-in infinite;
+            opacity: 0.3;
+        }
+        
+        .steam-2 {
+            position: fixed;
+            width: 80px;
+            height: 120px;
+            right: 15%;
+            top: 15%;
+            z-index: 0;
+            animation: steam 5s ease-in infinite 1s;
+            opacity: 0.25;
+        }
+        
+        .steam-3 {
+            position: fixed;
+            width: 60px;
+            height: 100px;
+            left: 50%;
+            top: 10%;
+            z-index: 0;
+            animation: steam 6s ease-in infinite 2s;
+            opacity: 0.2;
+        }
+        
+        @keyframes steam {
+            0% {
+                transform: translateY(0) scaleX(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-50px) scaleX(1.1);
+                opacity: 0.15;
+            }
+            100% {
+                transform: translateY(-100px) scaleX(0.8);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(30px) rotate(3deg); }
+        }
+        
+        /* Floating chai leaves */
+        .floating-leaf {
+            position: fixed;
+            font-size: 2em;
+            z-index: 0;
+            opacity: 0.3;
+            animation: float-leaf linear infinite;
+        }
+        
+        .leaf-1 { left: 5%; animation: float-leaf 15s linear infinite; }
+        .leaf-2 { left: 20%; animation: float-leaf 18s linear infinite 2s; }
+        .leaf-3 { right: 10%; animation: float-leaf 20s linear infinite 4s; }
+        .leaf-4 { right: 25%; animation: float-leaf 17s linear infinite 1s; }
+        
+        @keyframes float-leaf {
+            0% {
+                top: -50px;
+                transform: translateX(0) rotate(0deg);
+            }
+            25% {
+                transform: translateX(30px) rotate(90deg);
+            }
+            50% {
+                transform: translateX(0) rotate(180deg);
+            }
+            75% {
+                transform: translateX(-30px) rotate(270deg);
+            }
+            100% {
+                top: 100vh;
+                transform: translateX(0) rotate(360deg);
+            }
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 50px 40px;
+            background: rgba(20, 10, 40, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(243, 156, 18, 0.2);
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.8s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 40px;
+            color: #f39c12;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(243, 156, 18, 0.3);
+            font-weight: 700;
+        }
+        
+        .chai-card {
+            margin: 20px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.15) 0%, rgba(243, 156, 18, 0.05) 100%);
+            border-left: 5px solid #f39c12;
+            border-radius: 10px;
+            transition: all 0.4s ease;
+            color: #e3e1e7;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.1);
+        }
+        
+        .chai-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .chai-card:hover {
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.25) 0%, rgba(243, 156, 18, 0.1) 100%);
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.25);
+        }
+        
+        .chai-card:hover::before {
+            left: 100%;
+        }
+        
+        .chai-name {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #f39c12;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .chai-ingredients {
+            font-size: 0.95em;
+            margin-bottom: 12px;
+            line-height: 1.6;
+            color: #d4d1d7;
+        }
+        
+        .ingredients-label {
+            font-weight: 600;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+        
+        .chai-price {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #2ecc71;
+            text-shadow: 0 2px 5px rgba(46, 204, 113, 0.3);
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(243, 156, 18, 0.2);
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(52, 152, 219, 0.4);
+        }
+        
+        .center-btn {
+            text-align: center;
+        }
+        
+        /* RESPONSIVE DESIGN */
+        
+        /* Tablet (768px and below) */
+        @media (max-width: 768px) {
+            body {
+                padding: 30px 15px;
+            }
+            
+            body::before {
+                font-size: 10em;
+                top: -100px;
+                left: -80px;
+                opacity: 0.5;
+            }
+            
+            body::after {
+                font-size: 8em;
+                bottom: 0px;
+                right: -40px;
+                opacity: 0.4;
+            }
+            
+            .steam-1, .steam-2, .steam-3 {
+                opacity: 0.2;
+                width: 70px;
+                height: 120px;
+            }
+            
+            .floating-leaf {
+                font-size: 2em;
+                opacity: 0.2;
+            }
+            
+            .container {
+                max-width: 90%;
+                padding: 40px 30px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+                margin-bottom: 30px;
+            }
+            
+            .chai-card {
+                padding: 20px;
+                margin: 15px 0;
+            }
+            
+            .chai-name {
+                font-size: 1.3em;
+                margin-bottom: 10px;
+            }
+            
+            .chai-ingredients {
+                font-size: 0.9em;
+            }
+            
+            .chai-price {
+                font-size: 1.2em;
+            }
+            
+            .back-btn {
+                padding: 10px 25px;
+                font-size: 0.95em;
+            }
+        }
+        
+        /* Mobile (480px and below) */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+                min-height: 100vh;
+            }
+            
+            body::before {
+                font-size: 8em;
+                top: -60px;
+                left: -50px;
+                opacity: 0.4;
+            }
+            
+            body::after {
+                font-size: 6em;
+                bottom: -20px;
+                right: -30px;
+                opacity: 0.3;
+            }
+            
+            .steam-1 {
+                display: none;
+            }
+            
+            .steam-2 {
+                width: 50px;
+                height: 80px;
+                right: 10%;
+                top: 30%;
+                opacity: 0.15;
+            }
+            
+            .steam-3 {
+                display: none;
+            }
+            
+            .floating-leaf {
+                font-size: 1.5em;
+                opacity: 0.15;
+            }
+            
+            .leaf-3, .leaf-4 {
+                display: none;
+            }
+            
+            .container {
+                max-width: 100%;
+                padding: 30px 20px;
+                border-radius: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 25px;
+                letter-spacing: 1px;
+            }
+            
+            .chai-card {
+                padding: 15px;
+                margin: 12px 0;
+                border-left: 4px solid #f39c12;
+            }
+            
+            .chai-name {
+                font-size: 1.1em;
+                margin-bottom: 8px;
+            }
+            
+            .ingredients-label {
+                font-size: 0.9em;
+            }
+            
+            .chai-ingredients {
+                font-size: 0.85em;
+                margin-bottom: 10px;
+                line-height: 1.5;
+            }
+            
+            .chai-price {
+                font-size: 1.1em;
+                margin-top: 10px;
+                padding-top: 10px;
+            }
+            
+            .back-btn {
+                display: inline-block;
+                margin-top: 20px;
+                padding: 10px 20px;
+                font-size: 0.9em;
+                letter-spacing: 0.5px;
+            }
+        }
+        
+        /* Small Mobile (360px and below) */
+        @media (max-width: 360px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+            }
+            
+            .chai-card {
+                padding: 12px;
+                margin: 10px 0;
+            }
+            
+            .chai-name {
+                font-size: 1em;
+                margin-bottom: 6px;
+            }
+            
+            .chai-ingredients {
+                font-size: 0.8em;
+            }
+            
+            .chai-price {
+                font-size: 1em;
+            }
+            
+            .back-btn {
+                padding: 8px 18px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated steam elements -->
+    <div class="steam-1"></div>
+    <div class="steam-2"></div>
+    <div class="steam-3"></div>
+    
+    <!-- Floating tea leaves -->
+    <div class="floating-leaf leaf-1">🍃</div>
+    <div class="floating-leaf leaf-2">🍂</div>
+    <div class="floating-leaf leaf-3">🍃</div>
+    <div class="floating-leaf leaf-4">🍂</div>
+    
+    <div class="container">
+        <h1>🍵 Explore Our Chai Varieties</h1>
+        <div class="chai-list">
+            <div class="chai-card">
+                <div class="chai-name">Masala Chai</div>
+                <div class="ingredients-label">Ingredients:</div>
+                <div class="chai-ingredients">Black tea, ginger, cardamom, cinnamon, cloves, and milk</div>
+                <div class="chai-price">₹ Price: ₹20</div>
+            </div>
+            
+            <div class="chai-card">
+                <div class="chai-name">Ginger Chai</div>
+                <div class="ingredients-label">Ingredients:</div>
+                <div class="chai-ingredients">Black tea, fresh ginger, honey, lemon, and spices</div>
+                <div class="chai-price">₹ Price: ₹40</div>
+            </div>
+            
+            <div class="chai-card">
+                <div class="chai-name">Cardamom Chai</div>
+                <div class="ingredients-label">Ingredients:</div>
+                <div class="chai-ingredients">Green cardamom, black tea, milk, sugar, and vanilla extract</div>
+                <div class="chai-price">₹ Price: ₹50</div>
+            </div>
+            
+            <div class="chai-card">
+                <div class="chai-name">Turmeric Chai</div>
+                <div class="ingredients-label">Ingredients:</div>
+                <div class="chai-ingredients">Turmeric powder, black tea, ginger, black pepper, and milk</div>
+                <div class="chai-price">₹ Price: ₹50</div>
+            </div>
+            
+            <div class="chai-card">
+                <div class="chai-name">Rose Chai</div>
+                <div class="ingredients-label">Ingredients:</div>
+                <div class="chai-ingredients">Rose petals, black tea, milk, honey, and cardamom</div>
+                <div class="chai-price">₹ Price: ₹50</div>
+            </div>
+        </div>
+        <div class="center-btn">
+            <a href="/" class="back-btn">← Back Home</a>
+        </div>
+    </div>
+</body>
+</html> 

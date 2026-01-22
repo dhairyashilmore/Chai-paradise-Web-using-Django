@@ -1,0 +1,468 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page - Chai Paradise</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4a2c1a 0%, #6b4423 50%, #2a1810 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Large tea cup emoji in background */
+        body::before {
+            content: '☕';
+            position: fixed;
+            font-size: 15em;
+            color: rgba(243, 156, 18, 0.08);
+            top: -150px;
+            left: -100px;
+            z-index: 0;
+            animation: float 12s ease-in-out infinite;
+            opacity: 0.7;
+            text-shadow: 0 0 50px rgba(243, 156, 18, 0.05);
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+        
+        /* Large leaf emoji in background 
+        body::after {
+            content: '🍃';
+            position: fixed;
+            font-size: 12em;
+            color: rgba(212, 82, 42, 0.08);
+            bottom: -80px;
+            right: -50px;
+            z-index: 0;
+            animation: float 14s ease-in-out infinite reverse;
+            opacity: 0.6;            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;        }
+        
+        /* Steam wisps */
+        .steam-1 {
+            position: fixed;
+            width: 80px;
+            height: 150px;
+            left: 12%;
+            top: 20%;
+            z-index: 0;
+            background: radial-gradient(ellipse at center, rgba(243, 156, 18, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: steam-rise 4s ease-in infinite;
+            opacity: 0.4;
+            filter: blur(20px);
+            will-change: transform, opacity;
+            transform: translateZ(0);
+        }
+        
+        .steam-2 {
+            position: fixed;
+            width: 70px;
+            height: 140px;
+            right: 18%;
+            top: 25%;
+            z-index: 0;
+            background: radial-gradient(ellipse at center, rgba(243, 156, 18, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: steam-rise 5s ease-in infinite 1s;
+            opacity: 0.3;
+            filter: blur(20px);
+            will-change: transform, opacity;
+            transform: translateZ(0);
+        }
+        
+        .steam-3 {
+            position: fixed;
+            width: 60px;
+            height: 120px;
+            left: 50%;
+            top: 15%;
+            z-index: 0;
+            background: radial-gradient(ellipse at center, rgba(212, 82, 42, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: steam-rise 6s ease-in infinite 2s;
+            opacity: 0.25;
+            filter: blur(20px);
+            will-change: transform, opacity;
+            transform: translateZ(0);
+        }
+        
+        /* Falling leaves */
+        .floating-leaf {
+            position: fixed;
+            font-size: 2.5em;
+            z-index: 0;
+            opacity: 0.35;
+            animation: fall-leaf linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+        
+        .leaf-1 { left: 8%; animation: fall-leaf 16s linear infinite; }
+        .leaf-2 { left: 25%; animation: fall-leaf 18s linear infinite 1s; }
+        .leaf-3 { right: 12%; animation: fall-leaf 20s linear infinite 2s; }
+        .leaf-4 { right: 32%; animation: fall-leaf 17s linear infinite 3s; }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg) translateZ(0); }
+            50% { transform: translateY(50px) rotate(5deg) translateZ(0); }
+        }
+        
+        @keyframes steam-rise {
+            0% {
+                transform: translateY(0) scaleY(0.8) translateZ(0);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateY(-80px) scaleY(1.1) translateZ(0);
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-160px) scaleY(0.5) translateZ(0);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fall-leaf {
+            0% {
+                top: -50px;
+                transform: translateX(0) rotate(0deg) translateZ(0);
+                opacity: 0.35;
+            }
+            25% {
+                transform: translateX(50px) rotate(90deg) translateZ(0);
+            }
+            50% {
+                transform: translateX(0) rotate(180deg) translateZ(0);
+            }
+            75% {
+                transform: translateX(-50px) rotate(270deg) translateZ(0);
+            }
+            100% {
+                top: 100vh;
+                transform: translateX(0) rotate(360deg) translateZ(0);
+                opacity: 0;
+            }
+        }
+        
+        .container {
+            max-width: 700px;
+            padding: 60px 40px;
+            background: rgba(20, 10, 40, 0.75);
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(243, 156, 18, 0.3);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.8s ease-out;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) translateZ(0);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) translateZ(0);
+            }
+        }
+        
+        h1 {
+            font-size: 3em;
+            color: #f39c12;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(243, 156, 18, 0.4);
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        
+        p {
+            font-size: 1.2em;
+            color: #e3e1e7;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: #fff;
+            border: none;
+            padding: 16px 50px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            will-change: transform, box-shadow;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+            will-change: left;
+        }
+        
+        button:hover {
+            transform: translateY(-3px) translateZ(0);
+            box-shadow: 0 12px 35px rgba(243, 156, 18, 0.5);
+        }
+        
+        button:hover::before {
+            left: 100%;
+        }
+        
+        button:active {
+            transform: translateY(-1px) translateZ(0);
+        }
+        
+        .tea-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+            animation: spin 3s linear infinite;
+            text-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg) translateZ(0); }
+            100% { transform: rotate(360deg) translateZ(0); }
+        }
+        
+        /* RESPONSIVE DESIGN */
+        
+        /* Tablet (768px and below) */
+        @media (max-width: 768px) {
+            body::before {
+                font-size: 12em;
+                top: -120px;
+                left: -80px;
+            }
+            
+            body::after {
+                font-size: 10em;
+                bottom: -60px;
+                right: -40px;
+            }
+            
+            .steam-1 {
+                width: 60px;
+                height: 120px;
+                left: 10%;
+                top: 25%;
+                opacity: 0.3;
+            }
+            
+            .steam-2 {
+                width: 50px;
+                height: 100px;
+                right: 15%;
+                top: 30%;
+                opacity: 0.25;
+            }
+            
+            .steam-3 {
+                width: 40px;
+                height: 80px;
+                left: 50%;
+                top: 20%;
+                opacity: 0.2;
+            }
+            
+            .floating-leaf {
+                font-size: 2em;
+                opacity: 0.25;
+            }
+            
+            .container {
+                max-width: 90%;
+                padding: 40px 30px;
+                margin: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            p {
+                font-size: 1em;
+                margin-bottom: 30px;
+            }
+            
+            button {
+                padding: 14px 40px;
+                font-size: 1em;
+            }
+            
+            .tea-icon {
+                font-size: 3em;
+            }
+        }
+        
+        /* Mobile (480px and below) */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            body::before {
+                font-size: 8em;
+                top: -80px;
+                left: -60px;
+                opacity: 0.5;
+            }
+            
+            body::after {
+                font-size: 7em;
+                bottom: -40px;
+                right: -30px;
+                opacity: 0.4;
+            }
+            
+            .steam-1 {
+                display: none;
+            }
+            
+            .steam-2 {
+                width: 40px;
+                height: 80px;
+                right: 12%;
+                top: 35%;
+                opacity: 0.2;
+            }
+            
+            .steam-3 {
+                display: none;
+            }
+            
+            .floating-leaf {
+                font-size: 1.5em;
+                opacity: 0.2;
+            }
+            
+            .leaf-3, .leaf-4 {
+                display: none;
+            }
+            
+            .container {
+                max-width: 95%;
+                padding: 30px 20px;
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 10px;
+            }
+            
+            p {
+                font-size: 0.9em;
+                margin-bottom: 25px;
+                line-height: 1.5;
+            }
+            
+            button {
+                padding: 12px 30px;
+                font-size: 0.95em;
+                letter-spacing: 0.5px;
+            }
+            
+            .tea-icon {
+                font-size: 2.5em;
+                margin-bottom: 15px;
+            }
+        }
+        
+        /* Small Mobile (360px and below) */
+        @media (max-width: 360px) {
+            .container {
+                padding: 25px 15px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            p {
+                font-size: 0.85em;
+            }
+            
+            button {
+                padding: 10px 25px;
+                font-size: 0.9em;
+            }
+            
+            .tea-icon {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated steam elements -->
+    <div class="steam-1"></div>
+    <div class="steam-2"></div>
+    <div class="steam-3"></div>
+    
+    <!-- Floating tea leaves -->
+    <div class="floating-leaf leaf-1">🍃</div>
+    <div class="floating-leaf leaf-2">🍂</div>
+    <div class="floating-leaf leaf-3">🍃</div>
+    <div class="floating-leaf leaf-4">🍂</div>
+    
+    <div class="container">
+        <span class="tea-icon">☕</span>
+        <h1>Welcome to Chai Paradise</h1>
+        <p>Discover the finest collection of chai blends crafted with love and tradition</p>
+        <button onclick="location.href='{% url 'all_chai_items' %}'">Explore Our Chai Varieties</button>
+    </div>
+</body>
+</html>
